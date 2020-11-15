@@ -1,4 +1,4 @@
-package ru.study.crush;
+package ru.study.crush.model;
 
 public class User {
     private int id;

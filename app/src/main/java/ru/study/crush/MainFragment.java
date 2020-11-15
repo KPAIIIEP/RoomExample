@@ -7,7 +7,11 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import ru.study.crush.model.User;
+
 public class MainFragment extends Fragment {
+    private Presenter presenter;
+
     public static Fragment newInstance() {
         return new MainFragment();
     }
@@ -15,6 +19,9 @@ public class MainFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (presenter == null) {
+            presenter = new Presenter(new User());
+        }
     }
 
     @Override
