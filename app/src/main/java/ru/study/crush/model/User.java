@@ -1,11 +1,16 @@
 package ru.study.crush.model;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class User {
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private String name;
     private int age;
     private boolean isLogged;
-    private Position position;
+    //private Position position;
 
     public int getId() {
         return id;
@@ -39,11 +44,11 @@ public class User {
         isLogged = logged;
     }
 
-    public Position getPosition() {
-        return position;
-    }
-
-    public void setPosition(Position position) {
-        this.position = position;
-    }
+//    public Position getPosition() {
+//        return position;
+//    }
+//
+//    public void setPosition(Position position) {
+//        this.position = position;
+//    }
 }

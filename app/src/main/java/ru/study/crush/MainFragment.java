@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 
 import ru.study.crush.model.User;
+import ru.study.crush.model.UserDao;
+import ru.study.crush.model.UserDatabase;
 
 public class MainFragment extends Fragment {
     private Presenter presenter;
@@ -22,6 +24,8 @@ public class MainFragment extends Fragment {
         if (presenter == null) {
             presenter = new Presenter(new User());
         }
+        UserDatabase db = UserDatabase.getInstance(getContext());
+        UserDao userDao = db.userDao();
     }
 
     @Override
