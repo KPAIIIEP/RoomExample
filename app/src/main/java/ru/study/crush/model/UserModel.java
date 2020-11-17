@@ -1,15 +1,12 @@
 package ru.study.crush.model;
 
 import android.content.Context;
-import android.util.Log;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+
 
 public class UserModel {
     private static final String TAG = UserModel.class.getSimpleName();
@@ -19,60 +16,72 @@ public class UserModel {
         database = UserDatabase.getInstance(context);
     }
 
+    public interface LoadUserCallback {
+        void onLoad(List<User> users);
+    }
+
     public interface CompleteCallback {
         void onComplete();
     }
 
     public void add(User user, CompleteCallback callback) {
+        Handler handler = new Handler(Looper.getMainLooper());
         Thread thread = new Thread(new Runnable() {
             public void run() {
                 database.userDao().insert(user);
+                try {
+                    Thread.sleep(2000); // эмуляция задержки
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.onComplete();
+                    }
+                });
             }
         });
         thread.start();
-        try {
-            thread.join();
-            callback.onComplete();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
-    public List<User> getAll() {
-        List<User> users = new ArrayList<>();
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        Callable<List<User>> callable = new Callable<List<User>>() {
+    public void getAll(LoadUserCallback callback) {
+        HandlerThread handlerThread = new HandlerThread("DBThread");
+        handlerThread.start();
+        Handler handlerNew = new Handler(handlerThread.getLooper());
+        handlerNew.post(new Runnable() {
             @Override
-            public List<User> call() {
-                Log.i(TAG, Thread.currentThread().toString());
-                return database.userDao().getAll();
+            public void run() {
+                final List<User> users = database.userDao().getAll();
+                Handler handler = new Handler(Looper.getMainLooper());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.onLoad(users);
+                    }
+                });
             }
-        };
-        Future<List<User>> future = executor.submit(callable);
-        // future.get() returns 2 or raises an exception if the thread dies, so safer
-        try {
-            users = future.get();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        executor.shutdown();
-        return users;
+        });
     }
 
     public void deleteAll(CompleteCallback callback) {
+        Handler handler = new Handler(Looper.getMainLooper());
         Thread thread = new Thread(new Runnable() {
             public void run() {
                 database.userDao().deleteAll();
+                try {
+                    Thread.sleep(2000); // эмуляция задержки
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.onComplete();
+                    }
+                });
             }
         });
         thread.start();
-        try {
-            thread.join();
-            callback.onComplete();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 }

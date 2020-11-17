@@ -1,5 +1,6 @@
 package ru.study.crush;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import ru.study.crush.model.User;
 import ru.study.crush.model.UserModel;
 
 public class MainFragment extends Fragment {
+    private static final String TAG = MainFragment.class.getSimpleName();
     private Presenter presenter;
 
     private EditText editTextName;
@@ -28,6 +30,7 @@ public class MainFragment extends Fragment {
     private Button buttonClear;
     private RecyclerView recyclerView;
     private UserAdapter userAdapter;
+    private ProgressDialog progressDialog;
 
     public static Fragment newInstance() {
         return new MainFragment();
@@ -117,5 +120,15 @@ public class MainFragment extends Fragment {
 
     public void showUsers(List<User> users) {
         userAdapter.setUsers(users);
+    }
+
+    public void showProgress() {
+        progressDialog = ProgressDialog.show(getActivity(), "", "Пожалуйста, подождите");
+    }
+
+    public void hideProgress() {
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
     }
 }
