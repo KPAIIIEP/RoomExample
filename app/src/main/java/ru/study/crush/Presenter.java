@@ -18,6 +18,24 @@ public class Presenter {
     public void add() {
         User user = new User();
         user.setName((String) fragment.getUIData().get("name"));
-        model.add(user);
+        model.add(user, new UserModel.CompleteCallback() {
+            @Override
+            public void onComplete() {
+                getAll();
+            }
+        });
+    }
+
+    public void getAll() {
+        fragment.showUsers(model.getAll());
+    }
+
+    public void deleteAll() {
+        model.deleteAll(new UserModel.CompleteCallback() {
+            @Override
+            public void onComplete() {
+                getAll();
+            }
+        });
     }
 }
