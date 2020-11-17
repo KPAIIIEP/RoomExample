@@ -20,6 +20,7 @@ public class Presenter {
     public void add() {
         User user = new User();
         user.setName((String) fragment.getUIData().get("name"));
+        user.setAge(Integer.parseInt(fragment.getUIData().get("age")));
         fragment.showProgress();
         model.add(user, new UserModel.CompleteCallback() {
             @Override

@@ -26,6 +26,7 @@ public class MainFragment extends Fragment {
     private Presenter presenter;
 
     private EditText editTextName;
+    private EditText editTextAge;
     private Button buttonAdd;
     private Button buttonClear;
     private RecyclerView recyclerView;
@@ -49,6 +50,7 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         editTextName = getActivity().findViewById(R.id.editTextName);
+        editTextAge = getActivity().findViewById(R.id.editTextAge);
         buttonAdd = getActivity().findViewById(R.id.buttonAdd);
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +82,9 @@ public class MainFragment extends Fragment {
         }
 
         void bind(User user) {
-            textView.setText("id: " + user.getId() + ", name: " + user.getName());
+            textView.setText("id: " + user.getId()
+                    + ", name: " + user.getName()
+                    + ", age: " + user.getAge());
         }
     }
 
@@ -112,9 +116,10 @@ public class MainFragment extends Fragment {
         }
     }
 
-    public Map getUIData() {
-        Map<String, Object> map = new HashMap<>();
+    public Map<String, String> getUIData() {
+        Map<String, String> map = new HashMap<>();
         map.put("name", editTextName.getText().toString());
+        map.put("age", editTextAge.getText().toString());
         return map;
     }
 
