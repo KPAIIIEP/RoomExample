@@ -45,6 +45,27 @@ public class UserModel {
         thread.start();
     }
 
+    public void delete(int id, CompleteCallback callback) {
+        Handler handler = new Handler(Looper.getMainLooper());
+        Thread thread = new Thread(new Runnable() {
+            public void run() {
+                database.userDao().delete(database.userDao().getById(id));
+                try {
+                    Thread.sleep(2000); // эмуляция задержки
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.onComplete();
+                    }
+                });
+            }
+        });
+        thread.start();
+    }
+
     public void getAll(LoadUserCallback callback) {
         HandlerThread handlerThread = new HandlerThread("DBThread");
         handlerThread.start();

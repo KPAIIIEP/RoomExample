@@ -32,6 +32,17 @@ public class Presenter {
         });
     }
 
+    public void delete(int id) {
+        fragment.showProgress();
+        model.delete(id, new UserModel.CompleteCallback() {
+            @Override
+            public void onComplete() {
+                fragment.hideProgress();
+                getAll();
+            }
+        });
+    }
+
     public void getAll() {
         model.getAll(new UserModel.LoadUserCallback() {
             @Override

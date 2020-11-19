@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -78,13 +79,21 @@ public class MainFragment extends Fragment {
 
     private class UserHolder extends RecyclerView.ViewHolder {
         private TextView textView;
+        private final ImageButton imageButtonDelete;
 
         public UserHolder(View itemView) {
             super(itemView);
             textView = (TextView) itemView.findViewById(R.id.textViewItem);
+            imageButtonDelete = itemView.findViewById(R.id.imageButtonDelete);
         }
 
         void bind(User user) {
+            imageButtonDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    presenter.delete(user.getId());
+                }
+            });
             textView.setText("id: " + user.getId()
                     + ", name: " + user.getName()
                     + ", age: " + user.getAge()
