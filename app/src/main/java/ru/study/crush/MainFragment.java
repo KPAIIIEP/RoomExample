@@ -78,7 +78,7 @@ public class MainFragment extends Fragment {
 
         public UserHolder(View itemView) {
             super(itemView);
-            textView = (TextView) itemView;
+            textView = (TextView) itemView.findViewById(R.id.textViewItem);
         }
 
         void bind(User user) {
@@ -94,8 +94,10 @@ public class MainFragment extends Fragment {
         @Override
         public UserHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+//            View view = layoutInflater
+//                    .inflate(android.R.layout.simple_list_item_1, parent, false);
             View view = layoutInflater
-                    .inflate(android.R.layout.simple_list_item_1, parent, false);
+                    .inflate(R.layout.user_item, parent, false);
             return new UserHolder(view);
         }
 
