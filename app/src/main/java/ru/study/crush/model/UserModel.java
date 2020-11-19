@@ -45,6 +45,31 @@ public class UserModel {
         thread.start();
     }
 
+    public void update(int id, User user, CompleteCallback callback) {
+        Handler handler = new Handler(Looper.getMainLooper());
+        Thread thread = new Thread(new Runnable() {
+            public void run() {
+                User userDB = database.userDao().getById(id);
+                userDB.setName(user.getName());
+                userDB.setAge(user.getAge());
+                userDB.setLogged(user.isLogged());
+                database.userDao().update(userDB);
+                try {
+                    Thread.sleep(2000); // эмуляция задержки
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.onComplete();
+                    }
+                });
+            }
+        });
+        thread.start();
+    }
+
     public void delete(int id, CompleteCallback callback) {
         Handler handler = new Handler(Looper.getMainLooper());
         Thread thread = new Thread(new Runnable() {

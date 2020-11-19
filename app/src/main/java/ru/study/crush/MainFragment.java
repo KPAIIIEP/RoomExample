@@ -79,15 +79,23 @@ public class MainFragment extends Fragment {
 
     private class UserHolder extends RecyclerView.ViewHolder {
         private TextView textView;
+        private final ImageButton imageButtonUpdate;
         private final ImageButton imageButtonDelete;
 
         public UserHolder(View itemView) {
             super(itemView);
             textView = (TextView) itemView.findViewById(R.id.textViewItem);
+            imageButtonUpdate = itemView.findViewById(R.id.imageButtonUpdate);
             imageButtonDelete = itemView.findViewById(R.id.imageButtonDelete);
         }
 
         void bind(User user) {
+            imageButtonUpdate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    presenter.update(user.getId());
+                }
+            });
             imageButtonDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

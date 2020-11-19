@@ -32,6 +32,21 @@ public class Presenter {
         });
     }
 
+    public void update(int id) {
+        User user = new User();
+        user.setName((String) fragment.getUIData().get("name"));
+        user.setAge(Integer.parseInt(fragment.getUIData().get("age")));
+        user.setLogged(fragment.getUIData().get("isLogged").equals("1"));
+        fragment.showProgress();
+        model.update(id, user, new UserModel.CompleteCallback() {
+            @Override
+            public void onComplete() {
+                fragment.hideProgress();
+                getAll();
+            }
+        });
+    }
+
     public void delete(int id) {
         fragment.showProgress();
         model.delete(id, new UserModel.CompleteCallback() {
