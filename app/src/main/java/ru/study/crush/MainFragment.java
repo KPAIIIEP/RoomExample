@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -27,6 +28,7 @@ public class MainFragment extends Fragment {
 
     private EditText editTextName;
     private EditText editTextAge;
+    private CheckBox checkBoxLogged;
     private Button buttonAdd;
     private Button buttonClear;
     private RecyclerView recyclerView;
@@ -51,6 +53,7 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
         editTextName = getActivity().findViewById(R.id.editTextName);
         editTextAge = getActivity().findViewById(R.id.editTextAge);
+        checkBoxLogged = getActivity().findViewById(R.id.checkBoxLogged);
         buttonAdd = getActivity().findViewById(R.id.buttonAdd);
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +87,8 @@ public class MainFragment extends Fragment {
         void bind(User user) {
             textView.setText("id: " + user.getId()
                     + ", name: " + user.getName()
-                    + ", age: " + user.getAge());
+                    + ", age: " + user.getAge()
+                    + ", logged: " + user.isLogged());
         }
     }
 
@@ -122,6 +126,7 @@ public class MainFragment extends Fragment {
         Map<String, String> map = new HashMap<>();
         map.put("name", editTextName.getText().toString());
         map.put("age", editTextAge.getText().toString());
+        map.put("isLogged", checkBoxLogged.isChecked() ? "1" : "0");
         return map;
     }
 

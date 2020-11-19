@@ -21,6 +21,7 @@ public class Presenter {
         User user = new User();
         user.setName((String) fragment.getUIData().get("name"));
         user.setAge(Integer.parseInt(fragment.getUIData().get("age")));
+        user.setLogged(fragment.getUIData().get("isLogged").equals("1"));
         fragment.showProgress();
         model.add(user, new UserModel.CompleteCallback() {
             @Override
