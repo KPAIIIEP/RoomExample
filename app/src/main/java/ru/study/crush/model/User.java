@@ -10,7 +10,8 @@ public class User {
     private String name;
     private int age;
     private boolean isLogged;
-    //private Position position;
+
+    public User() {}
 
     public int getId() {
         return id;
@@ -43,12 +44,4 @@ public class User {
     public void setLogged(boolean logged) {
         isLogged = logged;
     }
-
-//    public Position getPosition() {
-//        return position;
-//    }
-//
-//    public void setPosition(Position position) {
-//        this.position = position;
-//    }
 }

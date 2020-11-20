@@ -28,7 +28,16 @@ public class UserModel {
         Handler handler = new Handler(Looper.getMainLooper());
         Thread thread = new Thread(new Runnable() {
             public void run() {
-                database.userDao().insert(user);
+                database.runInTransaction(new Runnable() {
+                    @Override
+                    public void run() {
+                        int id = (int) database.userDao().insert(user);
+                        Position position = new Position();
+                        position.setUserId(id);
+                        position.setName("programmer");
+                        database.positionDao().insert(position);
+                    }
+                });
                 try {
                     Thread.sleep(2000); // эмуляция задержки
                 } catch (InterruptedException e) {
