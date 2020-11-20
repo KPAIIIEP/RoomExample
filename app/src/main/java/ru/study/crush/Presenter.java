@@ -4,6 +4,7 @@ import java.util.List;
 
 import ru.study.crush.model.User;
 import ru.study.crush.model.UserModel;
+import ru.study.crush.view.MainFragment;
 
 public class Presenter {
     private MainFragment fragment;

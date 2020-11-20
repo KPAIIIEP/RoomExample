@@ -1,4 +1,4 @@
-package ru.study.crush;
+package ru.study.crush.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;

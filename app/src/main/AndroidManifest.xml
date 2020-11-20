@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RoomExample">
-        <activity android:name="ru.study.crush.MainActivity">
+        <activity android:name="ru.study.crush.view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

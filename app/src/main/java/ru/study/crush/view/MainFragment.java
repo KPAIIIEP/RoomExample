@@ -1,4 +1,4 @@
-package ru.study.crush;
+package ru.study.crush.view;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ru.study.crush.Presenter;
+import ru.study.crush.R;
 import ru.study.crush.model.User;
 import ru.study.crush.model.UserModel;
 
