@@ -2,10 +2,11 @@ package ru.study.crush.model;
 
 import android.content.Context;
 import android.os.Handler;
-import android.os.HandlerThread;
 import android.os.Looper;
 
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 
 public class UserModel {
@@ -101,14 +102,12 @@ public class UserModel {
     }
 
     public void getAll(LoadUserCallback callback) {
-        HandlerThread handlerThread = new HandlerThread("DBThread");
-        handlerThread.start();
-        Handler handlerNew = new Handler(handlerThread.getLooper());
-        handlerNew.post(new Runnable() {
+        Executor executor = Executors.newSingleThreadExecutor();
+        Handler handler = new Handler(Looper.getMainLooper());
+        executor.execute(new Runnable() {
             @Override
             public void run() {
-                final List<User> users = database.userDao().getAll();
-                Handler handler = new Handler(Looper.getMainLooper());
+                List<User> users = database.userDao().getAll();
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
